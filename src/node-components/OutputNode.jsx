@@ -1,7 +1,9 @@
 import { Handle } from "@xyflow/react";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const OutputNode = () => {
+  const outputResponse = useSelector((store) => store.data.outputResponse);
   return (
     <div className="node-content">
       <Handle type="source" position="left" className="node-handle" />
@@ -9,11 +11,7 @@ const OutputNode = () => {
       <div className="node-heading">OUTPUT</div>
       <div className="node-desc ">Expect the desired output here.</div>
       <div className="input-label">Output Response</div>
-      <input
-        type="text"
-        placeholder="Output response will be shown here"
-        className="input-field"
-      ></input>
+      <p className="input-field">{outputResponse} </p>
     </div>
   );
 };

@@ -9,15 +9,15 @@ import {
   BackgroundVariant,
   useReactFlow,
 } from "@xyflow/react";
-import { useCallback, useContext, useEffect, useRef } from "react";
-import DNDContext from "../utils/DndContext.jsx";
+import { useCallback, useRef } from "react";
 import { NODE_TYPES } from "../utils/constants.js";
+import { useSelector } from "react-redux";
 
 const ReactFlowContainer = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const dndContext = useContext(DNDContext);
   const { screenToFlowPosition } = useReactFlow(); //ReVisit
+  const dnd = useSelector((store) => store.dnd);
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
@@ -31,7 +31,7 @@ const ReactFlowContainer = () => {
     (event) => {
       event.preventDefault();
 
-      if (!dndContext.type) {
+      if (!dnd.nodeType) {
         return;
       }
 
@@ -42,15 +42,15 @@ const ReactFlowContainer = () => {
 
       const newNode = {
         id: getId(),
-        type: dndContext.type,
+        type: dnd.nodeType,
         position,
-        data: { label: dndContext.nodeLabel },
+        data: { label: dnd.nodeLabel },
         style: { width: 325 },
       };
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [dndContext, screenToFlowPosition, setNodes]
+    [dnd, screenToFlowPosition, setNodes]
   );
 
   const onDragOver = useCallback((event) => {

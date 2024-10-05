@@ -1,8 +1,7 @@
 import { Handle } from "@xyflow/react";
 import React from "react";
 
-const LLMNode = ({ input }) => {
-  console.log(input);
+const LLMNode = () => {
   return (
     <div className="node-content">
       <Handle type="target" position="right" className="node-handle" />

@@ -1,12 +1,12 @@
-import { useContext, useEffect } from "react";
-import DNDContext from "../utils/DndContext.jsx";
+import { useDispatch } from "react-redux";
+import { updateNodeLabel, updateNodeType } from "../utils/dndSlice.jsx";
 
 const SidePanel = () => {
-  const dndContext = useContext(DNDContext);
+  const dispatch = useDispatch();
 
   const onDragStart = (event, nodeType, nodeLabel) => {
-    dndContext.setType(nodeType);
-    dndContext.setNodeLabel(nodeLabel);
+    dispatch(updateNodeType(nodeType));
+    dispatch(updateNodeLabel(nodeLabel));
 
     event.dataTransfer.effectAllowed = "move";
   };

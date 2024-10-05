@@ -1,7 +1,15 @@
 import { Handle } from "@xyflow/react";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { updateInputQuery } from "../utils/dataSlice";
 
 const InputNode = () => {
+  const dispatch = useDispatch();
+
+  const handleInputChange = (e) => {
+    dispatch(updateInputQuery(e.target.value));
+  };
+
   return (
     <div className="node-content">
       <Handle type="target" position="right" className="node-handle" />
@@ -10,6 +18,7 @@ const InputNode = () => {
       <div className="node-desc ">Write the input/question you want to ask</div>
       <div className="input-label">Input</div>
       <input
+        onChange={(e) => handleInputChange(e)}
         type="text"
         placeholder="Type Something"
         className="input-field"
