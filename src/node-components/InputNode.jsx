@@ -1,7 +1,7 @@
 import { Handle } from "@xyflow/react";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { updateInputQuery } from "../utils/dataSlice";
+import { updateInputQuery } from "../store/dataSlice";
 
 const InputNode = () => {
   const dispatch = useDispatch();

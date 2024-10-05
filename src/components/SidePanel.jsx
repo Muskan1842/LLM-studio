@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { updateNodeLabel, updateNodeType } from "../utils/dndSlice.jsx";
+import { updateNodeLabel, updateNodeType } from "../store/dndSlice.jsx";
 
 const SidePanel = () => {
   const dispatch = useDispatch();

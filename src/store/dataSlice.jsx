@@ -5,7 +5,13 @@ const dataSlice = createSlice({
   initialState: {
     inputQuery: null,
     outputResponse: "Output response will be shown here",
-    llmModel: null,
+    llmModel: {
+      modelName: "gpt-3.5-turbo",
+      baseLink: null,
+      apiKey: null,
+      maxTokens: null,
+      temperature: null,
+    },
   },
   reducers: {
     updateInputQuery: (state, action) => {

@@ -7,3 +7,13 @@ export const NODE_TYPES = {
     default: LLMNode,
     output: OutputNode,
 }
+
+export const debounce = (fn) => {
+    let timer;
+    return (input, key) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn(input, key);
+        }, 300);
+    };
+};

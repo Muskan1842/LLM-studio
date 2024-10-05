@@ -4,7 +4,7 @@ import ReactFlowContainer from "./components/ReactFlowContainer.jsx";
 import { useEffect, useState } from "react";
 import SidePanel from "./components/SidePanel.jsx";
 import { ReactFlowProvider } from "@xyflow/react";
-import appStore from "./utils/appStore.jsx";
+import appStore from "./store/appStore.jsx";
 import { Provider } from "react-redux";
 
 export default function App() {
