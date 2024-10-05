@@ -9,7 +9,6 @@ const Header = () => {
   const llmModel = useSelector((store) => store.data.llmModel);
 
   const onClickRun = () => {
-    console.log("run clicked");
     // validate the workflow
     //    connecting input directly to output , not allow
     //    connecting to same node not allowed llm
