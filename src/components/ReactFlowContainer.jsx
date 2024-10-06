@@ -39,9 +39,7 @@ const ReactFlowContainer = () => {
     (event) => {
       event.preventDefault();
 
-      if (!dnd.nodeType) {
-        return;
-      }
+      if (!dnd.nodeType) return;
 
       const position = screenToFlowPosition({
         x: event.clientX,
@@ -80,7 +78,6 @@ const ReactFlowContainer = () => {
         isValidConnection={isValidConnection}
       >
         <Controls className="!left-[330px]" />
-        <MiniMap />
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
       </ReactFlow>
     </div>

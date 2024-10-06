@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateOutputResponse } from "../store/dataSlice";
 import { generateResponse } from "../utils/openai-config";
 import { toggleToast } from "../store/configSlice";
+import { updateDeployedModel } from "../store/chatSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,8 +17,9 @@ const Header = () => {
       throw Error("Please fill all the fields in LLM Model Configurations");
   };
 
-  const onClickRun = () => {
+  const HandleRunClick = () => {
     validateWorkflow();
+
     //fetch response from OpenAi
     generateResponse(inputQuery, llmModel).then((res) => {
       dispatch(updateOutputResponse(res));
@@ -26,12 +28,18 @@ const Header = () => {
     dispatch(toggleToast());
   };
 
+  const handleDeployClick = () => {
+    dispatch(updateDeployedModel(llmModel));
+  };
+
   return (
     <div className="header">
       <div>Logo</div>
       <div>
-        <button className="header-button-deploy">Deploy</button>
-        <button className="header-button-run" onClick={onClickRun}>
+        <button className="header-button-deploy" onClick={handleDeployClick}>
+          Deploy
+        </button>
+        <button className="header-button-run" onClick={HandleRunClick}>
           Run
         </button>
       </div>
