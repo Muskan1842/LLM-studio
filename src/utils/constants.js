@@ -8,6 +8,11 @@ export const NODE_TYPES = {
     output: OutputNode,
 }
 
+export const MODEL_NAMES = {
+    GPT_35_TURBO: 'gpt-3.5-turbo',
+    GPT_4_TURBO: 'gpt-4-turbo'
+}
+
 export const debounce = (fn) => {
     let timer;
     return (input, key) => {

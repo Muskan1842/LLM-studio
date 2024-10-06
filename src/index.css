@@ -110,14 +110,30 @@
   .input-field {
     display: flex;
     align-items: center;
-    padding: 0 15px;
+    padding: 5px 15px;
     border: 1px solid rgb(102, 102, 102, 0.35);
     border-radius: 5px;
-    height: 41px;
+    min-height: 41px;
     font-weight: 400;
     width: 283px;
     margin: 10px 0 0 20px;
     font-size: 14px;
   }
+
+}
+
+.toast {
+  position: fixed;
+  width: 426px;
+  height: 70px;
+  background: #0FA958;
+  border-radius: 14px;
+  padding: 0px 10px 5px 20px;
+  color: white;
+  z-index: 20;
+  right: 40px;
+  top: 90px;
+  display: flex;
+  flex-direction: column;
 
 }

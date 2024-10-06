@@ -2,17 +2,17 @@ import { Handle } from "@xyflow/react";
 import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { updateLlmModel } from "../store/dataSlice";
-import { debounce } from "../utils/constants";
+import { debounce, MODEL_NAMES } from "../utils/constants";
 
 const LLMNode = () => {
   const dispatch = useDispatch();
   let llmModel = {};
 
   const handleInputChange = (input, key) => {
-    console.log("handleInputChange called");
     console.log(input);
-    llmModel[key] = input;
 
+    llmModel[key] = input;
+    if (!llmModel.modelName) llmModel.modelName = MODEL_NAMES.GPT_35_TURBO;
     dispatch(updateLlmModel(JSON.parse(JSON.stringify(llmModel))));
   };
 
@@ -34,8 +34,11 @@ const LLMNode = () => {
         defaultValue={"gpt-3.5-turbo"}
         onChange={(e) => debouncedInputChange(e.target.value, "modelName")}
       >
-        <option value={"gpt-3.5-turbo"}>gpt-3.5-turbo</option>
-        <option value={"gpt-4-turbo"}>gpt-4-turbo</option>
+        {Object.values(MODEL_NAMES).map((name) => (
+          <option key={name} value={name}>
+            {name}
+          </option>
+        ))}
       </select>
 
       <div className="input-label">OpenAI API Base</div>

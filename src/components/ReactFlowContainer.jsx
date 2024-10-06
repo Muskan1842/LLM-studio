@@ -19,13 +19,21 @@ const ReactFlowContainer = () => {
   const { screenToFlowPosition } = useReactFlow(); //ReVisit
   const dnd = useSelector((store) => store.dnd);
 
+  const isValidConnection = (connection) => {
+    if (connection.target.includes("input")) {
+      return !connection.source.includes("output");
+    } else {
+      return !connection.target.includes(connection.source);
+    }
+  };
+
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
 
   const id = useRef(0);
-  const getId = () => `dndnode_${id.current++}`;
+  const getId = (nodeType) => `${nodeType}_${id.current++}`;
 
   const onDrop = useCallback(
     (event) => {
@@ -41,7 +49,7 @@ const ReactFlowContainer = () => {
       });
 
       const newNode = {
-        id: getId(),
+        id: getId(dnd.nodeType),
         type: dnd.nodeType,
         position,
         data: { label: dnd.nodeLabel },
@@ -69,6 +77,7 @@ const ReactFlowContainer = () => {
         onDrop={onDrop}
         onDragOver={onDragOver}
         nodeTypes={NODE_TYPES}
+        isValidConnection={isValidConnection}
       >
         <Controls className="!left-[330px]" />
         <MiniMap />

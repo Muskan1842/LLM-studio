@@ -4,7 +4,7 @@ const dataSlice = createSlice({
   name: "data",
   initialState: {
     inputQuery: null,
-    outputResponse: "Output response will be shown here",
+    outputResponse: null,
     llmModel: {
       modelName: "gpt-3.5-turbo",
       baseLink: null,

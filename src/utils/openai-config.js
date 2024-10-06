@@ -1,5 +1,12 @@
 export async function generateResponse(inputQuery, llmModel) {
-    const { modelName, baseLink, apiKey, maxTokens, temperature } = llmModel
+    let { modelName, baseLink, apiKey, maxTokens, temperature } = llmModel
+
+
+    // model= "gpt-3.5-turbo",
+    // baseLink = 'https://api.openai.com/v1/chat/completions'
+    // apiKey = ''
+    // maxTokens = 5;
+    // temperature = 0.5
 
     const requestBody = {
         messages: [
@@ -20,8 +27,8 @@ export async function generateResponse(inputQuery, llmModel) {
             body: JSON.stringify(requestBody),
         });
 
-        const data = await response.json();
-        return data?.choices[0].text.trim();
+        const data = await response?.json();
+        return data?.choices?.[0].message?.content?.trim();
     } catch (error) {
         console.error("Error:", error);
         return error;

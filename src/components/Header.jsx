@@ -2,23 +2,28 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOutputResponse } from "../store/dataSlice";
 import { generateResponse } from "../utils/openai-config";
+import { toggleToast } from "../store/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const inputQuery = useSelector((store) => store.data.inputQuery);
   const llmModel = useSelector((store) => store.data.llmModel);
 
-  const onClickRun = () => {
-    // validate the workflow
-    //    connecting input directly to output , not allow
-    //    connecting to same node not allowed llm
-    //    input should not be null
-    //    llm values none of them should be null
+  const validateWorkflow = () => {
+    if (inputQuery === null || inputQuery === "")
+      throw Error("Input field is Empty");
+    if (Object.values(llmModel).some((value) => value === null))
+      throw Error("Please fill all the fields in LLM Model Configurations");
+  };
 
-    console.log(llmModel);
+  const onClickRun = () => {
+    validateWorkflow();
+    //fetch response from OpenAi
     generateResponse(inputQuery, llmModel).then((res) => {
       dispatch(updateOutputResponse(res));
     });
+
+    dispatch(toggleToast());
   };
 
   return (
