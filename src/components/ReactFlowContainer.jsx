@@ -9,7 +9,7 @@ import {
   BackgroundVariant,
   useReactFlow,
 } from "@xyflow/react";
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 import { NODE_TYPES } from "../utils/constants.js";
 import { useSelector } from "react-redux";
 
@@ -32,9 +32,6 @@ const ReactFlowContainer = () => {
     [setEdges]
   );
 
-  const id = useRef(0);
-  const getId = (nodeType) => `${nodeType}_${id.current++}`;
-
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
@@ -47,8 +44,9 @@ const ReactFlowContainer = () => {
       });
 
       const newNode = {
-        id: getId(dnd.nodeType),
+        id: dnd.nodeType,
         type: dnd.nodeType,
+        dragHandle: ".drag-handle",
         position,
         data: { label: dnd.nodeLabel },
         style: { width: 325 },

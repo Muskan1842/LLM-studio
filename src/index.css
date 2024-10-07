@@ -41,7 +41,6 @@
   padding: 0 60px;
 
   .header-button-deploy {
-    background-color: rgba(0, 0, 0, 0.3);
     border-radius: 8px;
     padding: 7px 15px;
     color: white;
@@ -58,10 +57,6 @@
   }
 }
 
-
-
-
-
 .react-flow__node {
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -75,7 +70,7 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  padding-top: 20px;
+  /* padding-top: 20px; */
 
   .node-handle {
     border: 1px solid #7D5AC7;
@@ -84,15 +79,17 @@
   }
 
   .node-heading {
-    padding: 0 20px;
+    padding: 20px 20px 15px 20px;
     font-size: 16px;
     font-weight: 600;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
 
   .node-desc {
     color: #666666;
     background-color: #EEF4FF;
-    margin-top: 15px;
     padding: 15px 20px;
     font-size: 14px;
     font-weight: 600;
@@ -120,20 +117,45 @@
     font-size: 14px;
   }
 
+  .node-error-tooltip {
+    padding: 0.25rem 0.5rem;
+    background-color: #FF5353;
+    color: white;
+    font-weight: 400;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+    position: absolute;
+    top: -1.25rem;
+    right: -1.25rem;
+  }
+
 }
 
 .toast {
   position: fixed;
-  width: 426px;
-  height: 70px;
-  background: #0FA958;
+
   border-radius: 14px;
-  padding: 0px 10px 5px 20px;
+  padding: 10px 20px 15px 20px;
   color: white;
   z-index: 20;
   right: 40px;
   top: 90px;
   display: flex;
-  flex-direction: column;
 
+  justify-content: space-between;
+
+}
+
+.chat-button {
+  position: fixed;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 50px;
+  right: 40px;
+  font-size: 20px;
 }

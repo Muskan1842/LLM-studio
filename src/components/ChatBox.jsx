@@ -25,13 +25,10 @@ const ChatBox = () => {
           </div>
         )}
       </div>
-      <div className="mb-6 mx-20 flex justify-between ">
-        <input
-          ref={inputRef}
-          className="h-16 p-4 rounded-lg border-2 border-[#0000000A] shadow-lg w-[900px]"
-        ></input>
+      <div className="mb-6 mx-20 flex justify-stretch border-2 border-[#0000000A] shadow-lg rounded-lg">
+        <input ref={inputRef} className="h-16 p-4 w-[900px] flex-1"></input>
         <button
-          className="bg-gray-300 px-8  py-4 rounded-lg shadow-lg"
+          className="px-8  py-4  border-l-2"
           onClick={(e) => handleSearch(e)}
         >
           Search

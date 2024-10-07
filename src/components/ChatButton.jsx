@@ -1,13 +1,22 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ChatButton = () => {
+  const isChatButtonEnabled = useSelector(
+    (store) => store.config.isChatButtonEnabled
+  );
+
   return (
-    <Link to="chat">
-      <div className="text-xl fixed bottom-14 right-10 cursor-pointer p-3 rounded-full bg-[#2563EB]">
-        💬
-      </div>
-    </Link>
+    <div
+      className={`chat-button ${
+        isChatButtonEnabled
+          ? "bg-[#2563EB]"
+          : "bg-[#2563EB4D] pointer-events-none"
+      }`}
+    >
+      <Link to="chat">💬</Link>
+    </div>
   );
 };
 

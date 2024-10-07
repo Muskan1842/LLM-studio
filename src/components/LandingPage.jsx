@@ -12,10 +12,7 @@ const LandingPage = () => {
   return (
     <Provider store={appStore}>
       <div style={{ overflowX: "hidden", overflowY: "hidden" }}>
-        <Toast
-          msg={"Flow ran successfully"}
-          desc={"Your workflow is ready to be deployed"}
-        ></Toast>
+        <Toast></Toast>
         <Header></Header>
         <ReactFlowProvider>
           <ReactFlowContainer />

@@ -31,7 +31,7 @@ export async function generateResponse(inputQuery, llmModel) {
         return data?.choices?.[0].message?.content?.trim();
     } catch (error) {
         console.error("Error:", error);
-        return error;
+        throw Error();
     }
 
 };
