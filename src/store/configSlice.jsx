@@ -11,7 +11,7 @@ const configSlice = createSlice({
     showInputError: false,
     showLlmError: false,
     isDeployButtonEnabled: false,
-    isChatButtonEnabled: false,
+    isDeployed: false,
   },
   reducers: {
     toggleToast: (state, action) => {
@@ -26,8 +26,8 @@ const configSlice = createSlice({
     toggleDeployButton: (state, action) => {
       state.isDeployButtonEnabled = action.payload;
     },
-    toggleChatButton: (state, action) => {
-      state.isChatButtonEnabled = action.payload;
+    toggleDeployedState: (state, action) => {
+      state.isDeployed = !state.isDeployed;
     },
   },
 });
@@ -37,7 +37,7 @@ export const {
   toggleInputError,
   toggleLlmError,
   toggleDeployButton,
-  toggleChatButton,
+  toggleDeployedState,
 } = configSlice.actions;
 
 export default configSlice.reducer;

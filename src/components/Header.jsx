@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateOutputResponse } from "../store/dataSlice";
 import { generateResponse } from "../utils/openai-config";
 import {
-  toggleChatButton,
   toggleDeployButton,
+  toggleDeployedState,
   toggleInputError,
   toggleLlmError,
   toggleToast,
@@ -16,7 +16,7 @@ const Header = () => {
   const inputQuery = useSelector((store) => store.data.inputQuery);
   const llmModel = useSelector((store) => store.data.llmModel);
   const edges = useSelector((store) => store.node.edges);
-  const [deployButtonText, setDeployButtonText] = useState("Deploy");
+  const isDeployed = useSelector((store) => store.config.isDeployed);
 
   const isDeployButtonEnabled = useSelector(
     (store) => store.config.isDeployButtonEnabled
@@ -66,7 +66,7 @@ const Header = () => {
       );
       return;
     }
-    //fetch response from OpenAi
+    // fetch response from OpenAi
     generateResponse(inputQuery, llmModel)
       .then((res) => {
         dispatch(updateOutputResponse(res));
@@ -94,7 +94,7 @@ const Header = () => {
   };
 
   const handleDeployClick = () => {
-    // setDeployButtonText("Undeploy");
+    dispatch(toggleDeployedState());
     dispatch(updateDeployedModel(llmModel));
     dispatch(
       toggleToast({
@@ -104,7 +104,6 @@ const Header = () => {
         desc: "Your can now chat with the AI Assistant!",
       })
     );
-    dispatch(toggleChatButton(true));
   };
 
   return (
@@ -118,7 +117,7 @@ const Header = () => {
           }`}
           onClick={handleDeployClick}
         >
-          {deployButtonText}
+          {isDeployed ? "Undeploy" : "Deploy"}
         </button>
         <button className="header-button-run" onClick={HandleRunClick}>
           Run
