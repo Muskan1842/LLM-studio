@@ -8,11 +8,16 @@ const LLMNode = () => {
   const dispatch = useDispatch();
   const showLlmError = useSelector((store) => store.config.showLlmError);
 
-  const handleInputChange = (input, key) => {
-    dispatch(updateLlmModel({ key: key, value: input }));
-  };
+  const handleInputChange = useCallback(
+    (input, key) => {
+      dispatch(updateLlmModel({ key: key, value: input }));
+    },
+    [dispatch]
+  );
 
-  const debouncedInputChange = useCallback(debounce(handleInputChange)); // usecallback
+  const debouncedInputChange = useCallback(debounce(handleInputChange), [
+    handleInputChange,
+  ]);
 
   return (
     <div className="node-content">

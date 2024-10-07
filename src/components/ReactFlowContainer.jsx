@@ -63,17 +63,23 @@ const ReactFlowContainer = () => {
     event.dataTransfer.dropEffect = "move";
   }, []);
 
+  const onNodesChange = useCallback(
+    (changes) => dispatch(setNodes(applyNodeChanges(changes, nodes))),
+    [dispatch, nodes]
+  );
+
+  const onEdgesChange = useCallback(
+    (changes) => dispatch(setEdges(applyEdgeChanges(changes, edges))),
+    [dispatch, edges]
+  );
+
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        onNodesChange={(changes) =>
-          dispatch(setNodes(applyNodeChanges(changes, nodes)))
-        }
-        onEdgesChange={(changes) =>
-          dispatch(setEdges(applyEdgeChanges(changes, edges)))
-        }
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onDrop={onDrop}
         onDragOver={onDragOver}

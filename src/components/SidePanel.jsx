@@ -3,17 +3,20 @@ import {
   updateDraggingNodeLabel,
   updateDraggingNodeType,
 } from "../store/nodeSlice.jsx";
+import { useCallback } from "react";
 
 const SidePanel = () => {
   const dispatch = useDispatch();
 
-  const onDragStart = (event, nodeType, nodeLabel) => {
-    dispatch(updateDraggingNodeType(nodeType));
-    dispatch(updateDraggingNodeLabel(nodeLabel));
+  const onDragStart = useCallback(
+    (event, nodeType, nodeLabel) => {
+      dispatch(updateDraggingNodeType(nodeType));
+      dispatch(updateDraggingNodeLabel(nodeLabel));
 
-    event.dataTransfer.effectAllowed = "move";
-  };
-
+      event.dataTransfer.effectAllowed = "move";
+    },
+    [dispatch]
+  );
   return (
     <div className="side-panel">
       <div className="text-xl font-semibold"> Components </div>
