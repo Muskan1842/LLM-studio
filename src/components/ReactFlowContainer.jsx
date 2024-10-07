@@ -1,23 +1,24 @@
 import {
   ReactFlow,
-  MiniMap,
   Controls,
   Background,
-  useNodesState,
-  useEdgesState,
   addEdge,
   BackgroundVariant,
   useReactFlow,
+  applyNodeChanges,
+  applyEdgeChanges,
 } from "@xyflow/react";
 import { useCallback } from "react";
 import { NODE_TYPES } from "../utils/constants.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setEdges, setNodes } from "../store/nodeSlice.jsx";
 
 const ReactFlowContainer = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const dispatch = useDispatch();
+  const nodes = useSelector((store) => store.node.nodes);
+  const edges = useSelector((store) => store.node.edges);
   const { screenToFlowPosition } = useReactFlow(); //ReVisit
-  const dnd = useSelector((store) => store.dnd);
+  const node = useSelector((store) => store.node);
 
   const isValidConnection = (connection) => {
     if (connection.target.includes("input")) {
@@ -28,15 +29,15 @@ const ReactFlowContainer = () => {
   };
 
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
+    (params) => dispatch(setEdges(addEdge(params, edges))),
+    [dispatch, edges]
   );
 
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
 
-      if (!dnd.nodeType) return;
+      if (!node.draggingNodeType) return;
 
       const position = screenToFlowPosition({
         x: event.clientX,
@@ -44,17 +45,17 @@ const ReactFlowContainer = () => {
       });
 
       const newNode = {
-        id: dnd.nodeType,
-        type: dnd.nodeType,
+        id: node.draggingNodeType,
+        type: node.draggingNodeType,
         dragHandle: ".drag-handle",
         position,
-        data: { label: dnd.nodeLabel },
+        data: { label: node.draggingNodeLabel },
         style: { width: 325 },
       };
 
-      setNodes((nds) => nds.concat(newNode));
+      dispatch(setNodes([...nodes, newNode]));
     },
-    [dnd, screenToFlowPosition, setNodes]
+    [node, screenToFlowPosition, nodes, dispatch]
   );
 
   const onDragOver = useCallback((event) => {
@@ -67,8 +68,12 @@ const ReactFlowContainer = () => {
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
+        onNodesChange={(changes) =>
+          dispatch(setNodes(applyNodeChanges(changes, nodes)))
+        }
+        onEdgesChange={(changes) =>
+          dispatch(setEdges(applyEdgeChanges(changes, edges)))
+        }
         onConnect={onConnect}
         onDrop={onDrop}
         onDragOver={onDragOver}

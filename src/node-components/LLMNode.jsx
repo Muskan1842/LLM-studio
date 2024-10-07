@@ -6,13 +6,10 @@ import { debounce, MODEL_NAMES } from "../utils/constants";
 
 const LLMNode = () => {
   const dispatch = useDispatch();
-  let llmModel = {};
   const showLlmError = useSelector((store) => store.config.showLlmError);
 
   const handleInputChange = (input, key) => {
-    llmModel[key] = input;
-    if (!llmModel.modelName) llmModel.modelName = MODEL_NAMES.GPT_35_TURBO;
-    dispatch(updateLlmModel(JSON.parse(JSON.stringify(llmModel))));
+    dispatch(updateLlmModel({ key: key, value: input }));
   };
 
   const debouncedInputChange = useCallback(debounce(handleInputChange)); // usecallback

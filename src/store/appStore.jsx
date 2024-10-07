@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import dataSlice from "../store/dataSlice";
-import dndSlice from "../store/dndSlice";
+import nodeSlice from "../store/nodeSlice";
 import configSlice from "../store/configSlice";
 import chatSlice from "../store/chatSlice";
 
 const appStore = configureStore({
   reducer: {
     data: dataSlice,
-    dnd: dndSlice,
+    node: nodeSlice,
     config: configSlice,
     chat: chatSlice,
   },

@@ -1,12 +1,15 @@
 import { useDispatch } from "react-redux";
-import { updateNodeLabel, updateNodeType } from "../store/dndSlice.jsx";
+import {
+  updateDraggingNodeLabel,
+  updateDraggingNodeType,
+} from "../store/nodeSlice.jsx";
 
 const SidePanel = () => {
   const dispatch = useDispatch();
 
   const onDragStart = (event, nodeType, nodeLabel) => {
-    dispatch(updateNodeType(nodeType));
-    dispatch(updateNodeLabel(nodeLabel));
+    dispatch(updateDraggingNodeType(nodeType));
+    dispatch(updateDraggingNodeLabel(nodeLabel));
 
     event.dataTransfer.effectAllowed = "move";
   };

@@ -21,7 +21,8 @@ const dataSlice = createSlice({
       state.outputResponse = action.payload;
     },
     updateLlmModel: (state, action) => {
-      state.llmModel = action.payload;
+      const { key, value } = action.payload;
+      state.llmModel[key] = value;
     },
   },
 });

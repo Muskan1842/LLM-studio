@@ -15,6 +15,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const inputQuery = useSelector((store) => store.data.inputQuery);
   const llmModel = useSelector((store) => store.data.llmModel);
+  const edges = useSelector((store) => store.node.edges);
   const [deployButtonText, setDeployButtonText] = useState("Deploy");
 
   const isDeployButtonEnabled = useSelector(
@@ -22,35 +23,49 @@ const Header = () => {
   );
 
   const validateWorkflow = () => {
+    let returnVal = { isValid: true };
+
     dispatch(toggleInputError(false));
     dispatch(toggleLlmError(false));
     dispatch(toggleDeployButton(false));
-    let returnVal = true;
 
-    if (inputQuery === null || inputQuery === "") {
+    if (edges.length !== 2) {
+      returnVal = {
+        isValid: false,
+        msg: "Workflow Incomplete",
+        desc: "Please ensure all the edges and nodes are connected properly",
+      };
+    } else if (inputQuery === null || inputQuery === "") {
+      returnVal = {
+        isValid: false,
+        msg: "Error while running the flow",
+        desc: "Please ensure the input field is not empty",
+      };
       dispatch(toggleInputError(true));
-      returnVal = false;
-    }
-    if (Object.values(llmModel).some((value) => value === null)) {
+    } else if (Object.values(llmModel).some((value) => !value)) {
+      returnVal = {
+        isValid: false,
+        msg: "Error while running the flow",
+        desc: "Please ensure the LLM Engine Configurations are valid.",
+      };
       dispatch(toggleLlmError(true));
-      returnVal = false;
     }
     return returnVal;
   };
 
   const HandleRunClick = () => {
-    if (!validateWorkflow()) {
+    const validInfo = validateWorkflow();
+    if (!validInfo.isValid) {
       dispatch(
         toggleToast({
           visible: true,
           error: true,
-          msg: "Error while running the flow",
-          desc: "Please verify the all the inputs before running the flow",
+          msg: validInfo.msg,
+          desc: validInfo.desc,
         })
       );
       return;
     }
-
     //fetch response from OpenAi
     generateResponse(inputQuery, llmModel)
       .then((res) => {
@@ -94,7 +109,7 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div>Logo</div>
+      <div className="text-xl font-bold ">OpenAGI</div>
       <div>
         <button
           disabled={!isDeployButtonEnabled}
